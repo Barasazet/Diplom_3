@@ -2,7 +2,7 @@ import org.junit.rules.ExternalResource;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import page_object.MainPage;
+import ru.stellarburgers.pages.MainPage;
 
 public class DriverFactory extends ExternalResource {
     private static WebDriver driver;

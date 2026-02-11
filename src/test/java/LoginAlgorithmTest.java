@@ -1,3 +1,4 @@
+import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.RestAssured;
@@ -7,10 +8,10 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
-import page_object.LoginPage;
-import page_object.MainPage;
-import page_object.RegisterPage;
-import page_object.ResetPasswordPage;
+import ru.stellarburgers.pages.LoginPage;
+import ru.stellarburgers.pages.MainPage;
+import ru.stellarburgers.pages.RegistrationPage;
+import ru.stellarburgers.pages.ResetPasswordPage;
 
 import static org.junit.Assert.assertTrue;
 
@@ -23,7 +24,7 @@ public class LoginAlgorithmTest {
     WebDriver driver;
     MainPage mainPage;
     LoginPage loginPage;
-    RegisterPage registerPage;
+    RegistrationPage registerPage;
     ResetPasswordPage resetPasswordPage;
     ApiSteps apiSteps;
     LoginUserData loginUserData;
@@ -40,7 +41,7 @@ public class LoginAlgorithmTest {
         driver = factory.getDriver();
         mainPage = new MainPage(driver);
         loginPage = new LoginPage(driver);
-        registerPage = new RegisterPage(driver);
+        registerPage = new RegistrationPage(driver);
         resetPasswordPage = new ResetPasswordPage(driver);
         apiSteps = new ApiSteps();
         RestAssured.baseURI = mainPage.url;
@@ -49,6 +50,8 @@ public class LoginAlgorithmTest {
 
     @Test
     @DisplayName("Авторизация через кнопку 'Войти в аккаунт' на главной странице")
+    @Description("Кнопка 'Войти в аккаунт' переводит на страницу авторизации. После заполнения формы - пользователь авторизуется")
+
     public void shouldLoginUsingLoginButtonOnMainPage() {
 
         mainPage.clickOnLoginButtonMainPage();
@@ -63,6 +66,7 @@ public class LoginAlgorithmTest {
 
     @Test
     @DisplayName("Авторизация через кнопку 'Личный кабинет'")
+    @Description("Кнопка 'Личный кабинет' переводит на страницу авторизации. После заполнения формы - пользователь авторизуется")
     public void shouldLoginUsingPersonalAccount() {
         mainPage.clickOnPersonalAccountButton();
         loginPage.setEmail(email);
@@ -74,6 +78,8 @@ public class LoginAlgorithmTest {
 
     @Test
     @DisplayName("Авторизация через ссылку 'Войти' на странице регистрации")
+    @Description("Ссылка 'Войти' переводит на страницу авторизации. После заполнения формы - пользователь авторизуется")
+
     public void shouldLoginFromRegisterPage() {
         mainPage.clickOnPersonalAccountButton();
         loginPage.clickOnRegistrationLink();
@@ -87,6 +93,8 @@ public class LoginAlgorithmTest {
 
     @Test
     @DisplayName("Авторизация через ссылку 'Войти' на странице восстановления пароля")
+    @Description("Ссылка 'Войти' переводит на страницу авторизации. После заполнения формы - пользователь авторизуется")
+
     public void shouldLoginFromResetPasswordPage() {
         mainPage.clickOnPersonalAccountButton();
         loginPage.clickOnBeginResetPasswordLink();

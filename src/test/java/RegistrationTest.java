@@ -1,3 +1,4 @@
+import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.RestAssured;
@@ -7,9 +8,9 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
-import page_object.LoginPage;
-import page_object.MainPage;
-import page_object.RegisterPage;
+import ru.stellarburgers.pages.LoginPage;
+import ru.stellarburgers.pages.MainPage;
+import ru.stellarburgers.pages.RegistrationPage;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -23,7 +24,7 @@ public class RegistrationTest {
     WebDriver driver;
     MainPage mainPage;
     LoginPage loginPage;
-    RegisterPage registerPage;
+    RegistrationPage registerPage;
     ApiSteps apiSteps;
     LoginUserData loginUserData;
 
@@ -38,13 +39,14 @@ public class RegistrationTest {
         driver = factory.getDriver();
         mainPage = new MainPage(driver);
         loginPage = new LoginPage(driver);
-        registerPage = new RegisterPage(driver);
+        registerPage = new RegistrationPage(driver);
         loginUserData = new LoginUserData(name, email, password);
 
     }
 
     @Test
     @DisplayName("Регистрация пользователя")
+    @Description("При заполнении формы валидными данными - пользователь успешно регистрируется")
     public void shouldCreateUser() {
         apiSteps = new ApiSteps();
         RestAssured.baseURI = mainPage.url;
@@ -62,6 +64,7 @@ public class RegistrationTest {
 
     @Test
     @DisplayName("Появление сообщения при некорректном пароле")
+    @Description("Минимальное количество символов для поля Пароль - 6")
     public void invalidPasswordCauseErrorMessage() {
         mainPage.clickOnPersonalAccountButton();
         loginPage.clickOnRegistrationLink();
