@@ -14,7 +14,7 @@ public class DriverFactory extends ExternalResource {
     }
 
     public void initDriver() {
-        if ("yandex".equals(System.getProperty("browser" ))) {
+        if ("yandex".equals(System.getProperty("browser"))) {
             startYandex();
         } else {
             startChrome();
@@ -23,8 +23,8 @@ public class DriverFactory extends ExternalResource {
 
     private void startYandex() {
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--no-sandbox", "--headless", "--disable-dev-shm-usage" );
-        System.setProperty("webdriver.chrome.driver", "C:/Users/user/Downloads/yandexdriver-25.12.0.2197-win64/yandexdriver.exe" );
+        options.addArguments("--no-sandbox", "--headless", "--disable-dev-shm-usage");
+        System.setProperty("webdriver.chrome.driver", "C:/Users/user/Downloads/yandexdriver-25.12.0.2197-win64/yandexdriver.exe");
         driver = new ChromeDriver(options);
         driver.manage().window().maximize();
         driver.get(mainPage.url);
@@ -33,7 +33,7 @@ public class DriverFactory extends ExternalResource {
 
     private void startChrome() {
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--no-sandbox", "--headless", "--disable-dev-shm-usage" );
+        options.addArguments("--no-sandbox", "--headless", "--disable-dev-shm-usage");
         driver = new ChromeDriver(options);
         driver.manage().window().maximize();
         driver.get(mainPage.url);

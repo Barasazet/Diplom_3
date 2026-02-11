@@ -17,10 +17,10 @@ public class ResetPasswordPage {
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
-    private final By loginLink = By.xpath(".//a[@class='Auth_link__1fOlj' and text()='Войти']" );
+    private final By loginLink = By.xpath(".//a[@class='Auth_link__1fOlj' and text()='Войти']");
 
-    @Step("Кликнуть на ссылку 'Войти'" )
-    public void clickOnLoginLinkRegistrationPage() {
+    @Step("Кликнуть на ссылку 'Войти'")
+    public void clickOnLoginLink() {
         wait.until(ExpectedConditions.visibilityOfElementLocated(loginLink));
         wait.until(ExpectedConditions.elementToBeClickable(loginLink));
         driver.findElement(loginLink).click();

@@ -8,7 +8,7 @@ import page_object.MainPage;
 
 import static org.junit.Assert.assertTrue;
 
-@Feature("Проверка переключений вкладок" )
+@Feature("Проверка переключений вкладок")
 public class SwitchTabsTest {
     WebDriver driver;
     MainPage mainPage;
@@ -23,7 +23,7 @@ public class SwitchTabsTest {
     }
 
     @Test
-    @DisplayName("Сменить вкладку на 'Соусы'" )
+    @DisplayName("Сменить вкладку на 'Соусы'")
     public void shouldSwitchOnSaucesTab() {
         mainPage.setSaucesTab();
         assertTrue(mainPage.isSaucesTabActive());
@@ -31,14 +31,14 @@ public class SwitchTabsTest {
     }
 
     @Test
-    @DisplayName("Сменить вкладку на 'Начинки'" )
+    @DisplayName("Сменить вкладку на 'Начинки'")
     public void shouldSwitchOnFillingsTab() {
         mainPage.setFillingsTab();
         mainPage.isFillingsTabActive();
     }
 
     @Test
-    @DisplayName("Сменить вкладку на 'Булки'" )
+    @DisplayName("Сменить вкладку на 'Булки'")
     public void shouldSwitchOnBunsTab() {
         mainPage.setFillingsTab();
         mainPage.setBunsTab();

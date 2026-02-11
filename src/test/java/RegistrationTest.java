@@ -14,7 +14,7 @@ import page_object.RegisterPage;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-@Feature("Тестирование регистрации пользователя" )
+@Feature("Тестирование регистрации пользователя")
 public class RegistrationTest {
     String name;
     String email;
@@ -44,7 +44,7 @@ public class RegistrationTest {
     }
 
     @Test
-    @DisplayName("Регистрация пользователя" )
+    @DisplayName("Регистрация пользователя")
     public void shouldCreateUser() {
         apiSteps = new ApiSteps();
         RestAssured.baseURI = mainPage.url;
@@ -61,7 +61,7 @@ public class RegistrationTest {
     }
 
     @Test
-    @DisplayName("Появление сообщения при некорректном пароле" )
+    @DisplayName("Появление сообщения при некорректном пароле")
     public void invalidPasswordCauseErrorMessage() {
         mainPage.clickOnPersonalAccountButton();
         loginPage.clickOnRegistrationLink();

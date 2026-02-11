@@ -10,10 +10,11 @@ import org.openqa.selenium.WebDriver;
 import page_object.LoginPage;
 import page_object.MainPage;
 import page_object.RegisterPage;
+import page_object.ResetPasswordPage;
 
 import static org.junit.Assert.assertTrue;
 
-@Feature("Тестирование алгоритмов авторизации пользователя" )
+@Feature("Тестирование алгоритмов авторизации пользователя")
 public class LoginAlgorithmTest {
     String name;
     String email;
@@ -23,6 +24,7 @@ public class LoginAlgorithmTest {
     MainPage mainPage;
     LoginPage loginPage;
     RegisterPage registerPage;
+    ResetPasswordPage resetPasswordPage;
     ApiSteps apiSteps;
     LoginUserData loginUserData;
 
@@ -39,13 +41,14 @@ public class LoginAlgorithmTest {
         mainPage = new MainPage(driver);
         loginPage = new LoginPage(driver);
         registerPage = new RegisterPage(driver);
+        resetPasswordPage = new ResetPasswordPage(driver);
         apiSteps = new ApiSteps();
         RestAssured.baseURI = mainPage.url;
         apiSteps.createUser(loginUserData);
     }
 
     @Test
-    @DisplayName("Авторизация через кнопку 'Войти в аккаунт' на главной странице" )
+    @DisplayName("Авторизация через кнопку 'Войти в аккаунт' на главной странице")
     public void shouldLoginUsingLoginButtonOnMainPage() {
 
         mainPage.clickOnLoginButtonMainPage();
@@ -59,7 +62,7 @@ public class LoginAlgorithmTest {
     }
 
     @Test
-    @DisplayName("Авторизация через кнопку 'Личный кабинет'" )
+    @DisplayName("Авторизация через кнопку 'Личный кабинет'")
     public void shouldLoginUsingPersonalAccount() {
         mainPage.clickOnPersonalAccountButton();
         loginPage.setEmail(email);
@@ -70,7 +73,7 @@ public class LoginAlgorithmTest {
     }
 
     @Test
-    @DisplayName("Авторизация через ссылку 'Войти' на странице регистрации" )
+    @DisplayName("Авторизация через ссылку 'Войти' на странице регистрации")
     public void shouldLoginFromRegisterPage() {
         mainPage.clickOnPersonalAccountButton();
         loginPage.clickOnRegistrationLink();
@@ -83,11 +86,11 @@ public class LoginAlgorithmTest {
     }
 
     @Test
-    @DisplayName("Авторизация через ссылку 'Войти' на странице восстановления пароля" )
+    @DisplayName("Авторизация через ссылку 'Войти' на странице восстановления пароля")
     public void shouldLoginFromResetPasswordPage() {
         mainPage.clickOnPersonalAccountButton();
         loginPage.clickOnBeginResetPasswordLink();
-        registerPage.clickOnLoginLink();
+        resetPasswordPage.clickOnLoginLink();
         loginPage.setEmail(email);
         loginPage.setPassword(password);
         loginPage.clickOnLoginButton();
