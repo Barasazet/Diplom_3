@@ -7,6 +7,9 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
+import page_object.LoginPage;
+import page_object.MainPage;
+import page_object.RegisterPage;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -18,7 +21,9 @@ public class RegistrationTest {
     String password;
     String token;
     WebDriver driver;
-    PageObject pageObject;
+    MainPage mainPage;
+    LoginPage loginPage;
+    RegisterPage registerPage;
     ApiSteps apiSteps;
     LoginUserData loginUserData;
 
@@ -31,7 +36,9 @@ public class RegistrationTest {
         email = RandomStringUtils.randomAlphabetic(13) + "@yandex.ru";
         password = RandomStringUtils.randomAlphabetic(13);
         driver = factory.getDriver();
-        pageObject = new PageObject(driver);
+        mainPage = new MainPage(driver);
+        loginPage = new LoginPage(driver);
+        registerPage = new RegisterPage(driver);
         loginUserData = new LoginUserData(name, email, password);
 
     }
@@ -40,14 +47,14 @@ public class RegistrationTest {
     @DisplayName("Регистрация пользователя" )
     public void shouldCreateUser() {
         apiSteps = new ApiSteps();
-        RestAssured.baseURI = pageObject.url;
+        RestAssured.baseURI = mainPage.url;
 
-        pageObject.clickOnPersonalAccountButton();
-        pageObject.clickOnRegistrationLink();
-        pageObject.setName(name);
-        pageObject.setEmail(email);
-        pageObject.setPassword(password);
-        pageObject.clickOnFinishRegisterButton();
+        mainPage.clickOnPersonalAccountButton();
+        loginPage.clickOnRegistrationLink();
+        registerPage.setName(name);
+        registerPage.setEmail(email);
+        registerPage.setPassword(password);
+        registerPage.clickOnFinishRegisterButton();
         token = apiSteps.getAccessToken(loginUserData);
 
         assertNotNull(token);
@@ -56,15 +63,15 @@ public class RegistrationTest {
     @Test
     @DisplayName("Появление сообщения при некорректном пароле" )
     public void invalidPasswordCauseErrorMessage() {
-        pageObject.clickOnPersonalAccountButton();
-        pageObject.clickOnRegistrationLink();
-        pageObject.setName(name);
-        pageObject.setEmail(email);
+        mainPage.clickOnPersonalAccountButton();
+        loginPage.clickOnRegistrationLink();
+        registerPage.setName(name);
+        registerPage.setEmail(email);
         password = RandomStringUtils.randomAlphabetic(5);
-        pageObject.setPassword(password);
-        pageObject.clickOnEmptySpace();
+        registerPage.setPassword(password);
+        registerPage.clickOnEmptySpace();
 
-        assertTrue(pageObject.isInvalidPasswordMessageDisplayed());
+        assertTrue(registerPage.isInvalidPasswordMessageDisplayed());
     }
 
     @After

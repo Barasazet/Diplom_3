@@ -4,13 +4,14 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
+import page_object.MainPage;
 
 import static org.junit.Assert.assertTrue;
 
 @Feature("Проверка переключений вкладок" )
 public class SwitchTabsTest {
     WebDriver driver;
-    PageObject pageObject;
+    MainPage mainPage;
 
     @Rule
     public DriverFactory factory = new DriverFactory();
@@ -18,30 +19,30 @@ public class SwitchTabsTest {
     @Before
     public void setUp() {
         driver = factory.getDriver();
-        pageObject = new PageObject(driver);
+        mainPage = new MainPage(driver);
     }
 
     @Test
     @DisplayName("Сменить вкладку на 'Соусы'" )
     public void shouldSwitchOnSaucesTab() {
-        pageObject.setSaucesTab();
-        assertTrue(pageObject.isSaucesTabActive());
+        mainPage.setSaucesTab();
+        assertTrue(mainPage.isSaucesTabActive());
 
     }
 
     @Test
     @DisplayName("Сменить вкладку на 'Начинки'" )
     public void shouldSwitchOnFillingsTab() {
-        pageObject.setFillingsTab();
-        pageObject.isFillingsTabActive();
+        mainPage.setFillingsTab();
+        mainPage.isFillingsTabActive();
     }
 
     @Test
     @DisplayName("Сменить вкладку на 'Булки'" )
     public void shouldSwitchOnBunsTab() {
-        pageObject.setFillingsTab();
-        pageObject.setBunsTab();
-        pageObject.isBunsTabActive();
+        mainPage.setFillingsTab();
+        mainPage.setBunsTab();
+        mainPage.isBunsTabActive();
 
     }
 }

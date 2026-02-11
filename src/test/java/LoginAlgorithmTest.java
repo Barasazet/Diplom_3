@@ -7,6 +7,9 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
+import page_object.LoginPage;
+import page_object.MainPage;
+import page_object.RegisterPage;
 
 import static org.junit.Assert.assertTrue;
 
@@ -17,7 +20,9 @@ public class LoginAlgorithmTest {
     String password;
     String token;
     WebDriver driver;
-    PageObject pageObject;
+    MainPage mainPage;
+    LoginPage loginPage;
+    RegisterPage registerPage;
     ApiSteps apiSteps;
     LoginUserData loginUserData;
 
@@ -31,9 +36,11 @@ public class LoginAlgorithmTest {
         password = RandomStringUtils.randomAlphabetic(13);
         loginUserData = new LoginUserData(name, email, password);
         driver = factory.getDriver();
-        pageObject = new PageObject(driver);
+        mainPage = new MainPage(driver);
+        loginPage = new LoginPage(driver);
+        registerPage = new RegisterPage(driver);
         apiSteps = new ApiSteps();
-        RestAssured.baseURI = pageObject.url;
+        RestAssured.baseURI = mainPage.url;
         apiSteps.createUser(loginUserData);
     }
 
@@ -41,51 +48,51 @@ public class LoginAlgorithmTest {
     @DisplayName("Авторизация через кнопку 'Войти в аккаунт' на главной странице" )
     public void shouldLoginUsingLoginButtonOnMainPage() {
 
-        pageObject.clickOnLoginButtonMainPage();
-        pageObject.setEmail(email);
-        pageObject.setPassword(password);
-        pageObject.clickOnLoginButton();
+        mainPage.clickOnLoginButtonMainPage();
+        loginPage.setEmail(email);
+        loginPage.setPassword(password);
+        loginPage.clickOnLoginButton();
 
         //Кнопка "Оформить заказ" доступна только авторизированным пользователям
-        assertTrue(pageObject.isCreateOrderButtonDisplayed());
+        assertTrue(mainPage.isCreateOrderButtonDisplayed());
 
     }
 
     @Test
     @DisplayName("Авторизация через кнопку 'Личный кабинет'" )
     public void shouldLoginUsingPersonalAccount() {
-        pageObject.clickOnPersonalAccountButton();
-        pageObject.setEmail(email);
-        pageObject.setPassword(password);
-        pageObject.clickOnLoginButton();
+        mainPage.clickOnPersonalAccountButton();
+        loginPage.setEmail(email);
+        loginPage.setPassword(password);
+        loginPage.clickOnLoginButton();
 
-        assertTrue(pageObject.isCreateOrderButtonDisplayed());
+        assertTrue(mainPage.isCreateOrderButtonDisplayed());
     }
 
     @Test
     @DisplayName("Авторизация через ссылку 'Войти' на странице регистрации" )
     public void shouldLoginFromRegisterPage() {
-        pageObject.clickOnPersonalAccountButton();
-        pageObject.clickOnRegistrationLink();
-        pageObject.clickOnLoginLinkRegistrationPage();
-        pageObject.setEmail(email);
-        pageObject.setPassword(password);
-        pageObject.clickOnLoginButton();
+        mainPage.clickOnPersonalAccountButton();
+        loginPage.clickOnRegistrationLink();
+        registerPage.clickOnLoginLink();
+        loginPage.setEmail(email);
+        loginPage.setPassword(password);
+        loginPage.clickOnLoginButton();
 
-        assertTrue(pageObject.isCreateOrderButtonDisplayed());
+        assertTrue(mainPage.isCreateOrderButtonDisplayed());
     }
 
     @Test
     @DisplayName("Авторизация через ссылку 'Войти' на странице восстановления пароля" )
     public void shouldLoginFromResetPasswordPage() {
-        pageObject.clickOnPersonalAccountButton();
-        pageObject.clickOnBeginResetPasswordButton();
-        pageObject.clickOnLoginLinkRegistrationPage();
-        pageObject.setEmail(email);
-        pageObject.setPassword(password);
-        pageObject.clickOnLoginButton();
+        mainPage.clickOnPersonalAccountButton();
+        loginPage.clickOnBeginResetPasswordLink();
+        registerPage.clickOnLoginLink();
+        loginPage.setEmail(email);
+        loginPage.setPassword(password);
+        loginPage.clickOnLoginButton();
 
-        assertTrue(pageObject.isCreateOrderButtonDisplayed());
+        assertTrue(mainPage.isCreateOrderButtonDisplayed());
     }
 
     @After
